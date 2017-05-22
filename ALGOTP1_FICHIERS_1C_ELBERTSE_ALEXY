@@ -1,0 +1,154 @@
+ALGORITHME : Fiche de conjugaison
+
+BUT: Cet algorithme permet ,selon la demande de l'utilisateur, d'afficher le fichier contenant la liste des treize verbes,de reconnaître le groupe de chaque verbe et/ou de conjuguer le verbe au présent de l'indicatif.
+ENTREE : Demande utilisateur et le verbe ChVb souhaité
+SORTIE : La fonctionnalité demandé ainsi que le fichier
+
+CONSTANTE
+	MAXverb <- 13
+	1Sing <- "je"
+	1bisSing <- "j'"
+	2Sing <- "tu"
+	3Sing <- "il"
+	1Plur <- "nous"
+	2Plur <- "vous"
+	3Plur <- "ils"
+	1Pronom <- "m'"
+	2Pronom <- "t'"
+	3Pronom <- "s'"
+
+TYPE
+	TabVerb: TABLEAU[1..MAXverb] de CHAINE
+
+
+
+
+PROCEDURE CREA_VERB(tab1: TabVerb; groupeVerb: CHAINE; compteur: ENTIER)
+
+BUT: Cette procedure liste les treize verbes en questions dans le fichier et les affiche dans le programme principal
+ENTREE: lancement du programme
+SORTIE: fich_verb
+
+DEBUT
+	AJOUTER(fich_verb)		// permet d'ajouter les verbes dans le fichier
+	compteur <- 1
+	tab1[compteur]<-"RIRE"		//exemple, tab1[1]<-"RIRE"
+	ECRIRE(fich_verb,"RIRE :",GROUPE_VERBE)
+	compteur <- compteur+1
+
+	tab1[compteur]<-"RECEVOIR"	
+	ECRIRE(fich_verb,"RECEVOIR :",GROUPE_VERBE)
+	compteur <- compteur+1
+
+	tab1[compteur]<-"ALLER"	
+	ECRIRE(fich_verb,"ALLER :",GROUPE_VERBE)
+	compteur <- compteur+1
+
+	tab1[compteur]<-"BOUILLIR"
+	ECRIRE(fich_verb,"BOUILLIR :",GROUPE_VERBE)
+	compteur <- compteur+1
+
+	tab1[compteur]<-"ENVOYER"	
+	ECRIRE(fich_verb,"ENVOYER :",GROUPE_VERBE)
+	compteur <- compteur+1
+
+	tab1[compteur]<-"PEINDRE"
+	ECRIRE(fich_verb,"PEINDRE :",GROUPE_VERBE)
+	compteur <- compteur+1
+
+	tab1[compteur]<-"HABITER"
+	ECRIRE(fich_verb,"HABITER :",GROUPE_VERBE)
+	compteur <- compteur+1
+
+	tab1[compteur]<-"PAYER"
+	ECRIRE(fich_verb,"PAYER :",GROUPE_VERBE)
+	compteur <- compteur+1
+
+	tab1[compteur]<-"MOURIR"
+	ECRIRE(fich_verb,"MOURIR :",GROUPE_VERBE)
+	compteur <- compteur+1
+
+	tab1[compteur]<-"HAIR"
+	ECRIRE(fich_verb,"HAIR :",GROUPE_VERBE)
+	compteur <- compteur+1
+
+	tab1[compteur]<-"VOULOIR"
+	ECRIRE(fich_verb,"VOULOIR :",GROUPE_VERBE)
+	compteur <- compteur+1
+
+	tab1[compteur]<-"FINIR"
+	ECRIRE(fich_verb,"FINIR :",GROUPE_VERBE)
+	compteur <- compteur+1
+
+	tab1[compteur]<-"S'AMUSER"
+	ECRIRE(fich_verb,"S'AMUSER :",GROUPE_VERBE)
+
+	FERMER(fich_verb)
+FINPROCEDURE
+
+
+
+
+Fonction GROUPE_VERBE(tab2: TabVerb; suffixe,suffixe2,suffixe3,suffixe4: CHAINE; i: ENTIER): CHAINE
+
+BUT: Cette fonction a pour but de déterminer le groupe des verbes présents dans le fichier verbes
+
+DEBUT
+	suffixe<-"er"
+	suffixe2<-"ir"
+	suffixe3<-"oir"
+	suffixe4<-"re"
+	SI 	pos(suffixe,tab2[i])<>0 ALORS		//détermine si -er est présent dans le verbe
+		GROUPE_VERBE<-"1er groupe"
+	SINON SI pos(suffixe2,tab2[i])<>0 ALORS		//détermine si -ir est présent dans le verbe
+		GROUP_VERBE<-"2nd groupe"
+	SINON SI pos(suffixe3,tab2[i])<>0 OU pos(suffixe4,tab2[i])<>0 OU tab2[i]="ALLER" ALORS	//détermine si -re,-oir ou ALLER est présent dans le verbe
+		GROUP_VERBE<-"3eme groupe"
+	FINSI
+FINFONCTION
+
+
+FINPROCEDURE
+
+
+PROCEDURE AFFICHER_FICHIER(choix : CARACTERE;longfichier : CHAINE)
+BUT : Cette procédure permet à l'utilisateur d'afficher la fiche de conjugaison
+ENTREE : la touche 5 pressé par l'utilisateur
+SORTIE : le fichier fich_verb
+
+DEBUT
+	choix <- ''
+	LIRE(choix)
+	SI choix=5 ALORS
+		REINITIALISER(fich_verb)
+		ECRIRE("Affichage du contenue du fichier fich_verb :")
+		REPETER
+			LIRE(fich_verb,longfich)
+			ECRIRE(longfich)
+		JUSQU'A FINDEFICHIER{eof} (fich_verb)
+	FINSI
+FINPROCEDURE
+
+
+
+
+
+
+
+VAR :	
+		fich_verb : fichier de texte
+		ChVb : CHAINE
+		i : ENTIER
+		TabV : TabVerb
+
+
+DEBUT
+	ATTRIBUER(fich_verb,"fich_verb.txt")
+	REECRIRE(fich_verb)
+	ECRIRE("Les verbes traités dans ce programme sont : RIRE, RECEVOIR, ALLER, BOUILLIR, ENVOYER, PEINDRE, HABITER, PAYER, MOURIR, HAIR, VOULOIR, FINIR, S'AMUSER")
+	CREA_VERB(TabVerb)
+	ECRIRE("Souhaitiez-vous consulter le fichier contenant les verbes? Si oui, appuyer sur 5")
+	AFFICHER_FICHIER
+FIN.
+
+
